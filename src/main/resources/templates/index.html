@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+<h1 class="text-3xl font-bold underline"> Hello world</h1>
+
+<div th:each="user:${users}">
+<p th:text="${user.name}"></p>
+</div>
+
+</body>
+</html>
