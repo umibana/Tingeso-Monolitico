@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+<h1 class="text-3xl font-bold underline"> Crear usuario </h1>
+
+<form method="post" th:action="@{/users}">
+  <input type="text" id="name" name="name" placeholder="Nombre">
+  <input type="text" id="surname" name="surname" placeholder="Apellidos">
+  <input type="date" id="birthdate" name="birthdate" placeholder="Fecha de nacimiento">
+  <select id="schoolType" name="schoolType">
+    <option value="MUNICIPAL">Municipal</option>
+    <option value="SUBVENCIONADO">Subvencionado</option>
+    <option value="PRIVADO">Privado</option>
+  </select>
+  <input type="number" id="graduationYear" name="graduationYear" placeholder="Año de graduación">
+  <button type="submit">Create User</button>
+</form>
+
+</body>
+</html>

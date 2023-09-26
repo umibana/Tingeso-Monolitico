@@ -12,6 +12,12 @@
 <div th:each="user:${users}">
 <p th:text="${user.name}"></p>
 </div>
+<div>
+    <a th:href="@{/createUser}"> Crear usuario</a>
+
+
+
+</div>
 
 </body>
 </html>
