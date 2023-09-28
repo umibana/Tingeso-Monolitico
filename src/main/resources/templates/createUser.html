@@ -9,9 +9,11 @@
 <body>
 <h1 class="text-3xl font-bold underline"> Crear usuario </h1>
 
+<!-- Form for the creation of an userEntity -->
 <form method="post" th:action="@{/users}">
   <input type="text" id="name" name="name" placeholder="Nombre">
   <input type="text" id="surname" name="surname" placeholder="Apellidos">
+  <input type="text" id="rut" name="rut" placeholder="RUT:1.234.456-0">
   <input type="date" id="birthdate" name="birthdate" placeholder="Fecha de nacimiento">
   <select id="schoolType" name="schoolType">
     <option value="MUNICIPAL">Municipal</option>

@@ -9,10 +9,12 @@
 <body>
 <h1 class="text-3xl font-bold underline"> Hello world</h1>
 
+<!-- We list the users (students) -->
 <div th:each="user:${users}">
 <p th:text="${user.name}"></p>
 </div>
 <div>
+    <!-- We create a link to the createUsers route -->
     <a th:href="@{/createUser}"> Crear usuario</a>
 
 
