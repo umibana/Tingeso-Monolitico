@@ -1,6 +1,6 @@
 package com.hans.tingeso.Services;
 
-import com.hans.tingeso.Entities.SchoolType;
+import com.hans.tingeso.Models.SchoolType;
 import com.hans.tingeso.Entities.UserEntity;
 import org.springframework.stereotype.Service;
 

@@ -9,14 +9,13 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@Table(name = "installement_entity")
-public class InstallmentEntity {
+@Table(name = "score_entity")
+public class ScoreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
-    private boolean isPaid;
-    private int amount;
+    private int score;
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "user_id") // add this line

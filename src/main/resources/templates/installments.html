@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+<div th:each="installment : ${installments  }">
+  <p th:text="${installment.getAmount() * (1 - (user.getDiscount() / 100.0))}"></p>
+  <p th:text="${installment.getDate()}"></p>
+  <p th:text="${installment.isPaid()}"></p>
+  <form th:action="@{/togglePaidStatus}" th:method="post">
+    <input type="hidden" name="id" th:value="${installment.getId()}">
+    <input type="submit" value="Toggle Paid Status">
+  </form>
+</div>
+
+
+</body>
+</html>

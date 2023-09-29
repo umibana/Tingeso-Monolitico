@@ -16,10 +16,18 @@
 <div>
     <!-- We create a link to the createUsers route -->
     <a th:href="@{/createUser}"> Crear usuario</a>
-
-
-
 </div>
+<h1>Busqueda por RUT</h1>
+<form action="/installments" method="get">
+    <input type="text" name="search" placeholder="Ingrese RUT">
+    <input type="submit" value="Search">
+</form>
+
+<h1>Subir notas</h1>
+<form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Upload</button>
+</form>
 
 </body>
 </html>

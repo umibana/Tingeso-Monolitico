@@ -1,9 +1,9 @@
 package com.hans.tingeso.Entities;
 
+import com.hans.tingeso.Models.SchoolType;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,10 +31,9 @@ public class UserEntity {
     // but due to lack of time we do it here
     private boolean enrollStatus;
     private int discount;
-    // We use this to store the exam scores in an array
-    @ElementCollection
-    private int[] examScores;
     // We save the transient objects
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ScoreEntity> scores;
     @OneToMany(cascade = CascadeType.ALL)
     private List<InstallmentEntity> installments;
 }
