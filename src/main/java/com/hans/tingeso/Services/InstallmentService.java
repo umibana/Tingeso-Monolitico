@@ -1,4 +1,5 @@
 package com.hans.tingeso.Services;
+
 import com.hans.tingeso.Entities.InstallmentEntity;
 import com.hans.tingeso.Entities.UserEntity;
 import com.hans.tingeso.Repositories.InstallmentRepository;
@@ -12,10 +13,12 @@ import java.util.ArrayList;
 public class InstallmentService {
     @Autowired
     InstallmentRepository installmentRepository;
-    public InstallmentEntity findById(int id){
+
+    public InstallmentEntity findById(int id) {
         return installmentRepository.findById(id).get();
     }
-    public InstallmentEntity saveInstallment(InstallmentEntity installment){
+
+    public InstallmentEntity saveInstallment(InstallmentEntity installment) {
         return installmentRepository.save(installment);
     }
 }

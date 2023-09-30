@@ -3,6 +3,7 @@ package com.hans.tingeso.Entities;
 import com.hans.tingeso.Models.SchoolType;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +31,7 @@ public class UserEntity {
     // This should be separated in it's own entity
     // but due to lack of time we do it here
     private boolean enrollStatus;
+    private boolean usingCredit;
     private int discount;
     // We save the transient objects
     @OneToMany(cascade = CascadeType.ALL)

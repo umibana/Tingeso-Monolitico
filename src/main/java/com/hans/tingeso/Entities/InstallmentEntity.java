@@ -17,7 +17,9 @@ public class InstallmentEntity {
     private Integer id;
     private boolean isPaid;
     private int amount;
+    private int amountPaid;
     private LocalDate date;
+    private LocalDate paidDate;
     @ManyToOne
     @JoinColumn(name = "user_id") // add this line
     private UserEntity user;

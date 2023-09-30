@@ -92,6 +92,74 @@ public class UserService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public int getAverageScore(UserEntity user) {
+        List<ScoreEntity> scores = scoreRepository.findByUser(user);
+        System.out.println(scores);
+        int total = 0;
+        for (ScoreEntity score : scores) {
+            System.out.println(score);
+            total += score.getScore();
+        }
+        return total / scores.size();
+    }
+
+    public int getDiscountScore(UserEntity user) {
+        int score = getAverageScore(user);
+        if (score >= 950) {
+            return 10;
+        } else if (score >= 900) {
+            return 5;
+        } else if (score >= 850) {
+            return 2;
+        }
+        return 0;
+
+    }
+    public int getExamsTaken(UserEntity user) {
+        List<ScoreEntity> scores = scoreRepository.findByUser(user);
+        return scores.size();
+
+    }
+    public int getAmountPaid(UserEntity user){
+        List<InstallmentEntity> installments = userRepository.findUnpaidInstallmentsByRut(user.getRut());
+        int discount = user.getDiscount();
+        int scoreDiscount = getDiscountScore(user);
+        int totalAmount = 0;
+        int index= 0;
+        for (InstallmentEntity installment : installments) {
+            // If it's the first installment, we add the discount from the exams
+            int finalDiscount = (index == 0) ? discount + scoreDiscount : scoreDiscount;
+            totalAmount += installment.getAmount() * (1 - (finalDiscount / 100.0));
+            index++;
+        }
+
+        return totalAmount;
+
+    }
+    public int getAmountPendingPayment(UserEntity user){
+        List<InstallmentEntity> installments = userRepository.findPaidInstallmentsByRut(user.getRut());
+        int totalAmount = 0;
+        for (InstallmentEntity installment : installments) {
+            totalAmount += installment.getAmountPaid();
+        }
+        return totalAmount;
+    }
+    public String getUserSummary(UserEntity user){
+        String summary = "";
+        summary += "Nombre: " + user.getName() + " " + user.getSurname() + "\n";
+        summary += "RUT: " + user.getRut() + "\n";
+        summary += "Examenes rendidos " + getExamsTaken(user) + "\n";
+        summary += "Promedio: " + getAverageScore(user) + "\n";
+        summary += "Tipo de pago " + (user.isUsingCredit() ? "Crédito" : "Contado") + "\n";
+        summary += "Cuotas pagadas " + getAmountPendingPayment(user) + "\n";
+        summary += "Fecha ultimo pago " + userRepository.findLastPaidDateByRut(user.getRut()) + "\n";
+//▪ Nro. Cuotas con retraso : Use the payment service and find where localdate > this.localdate
+        summary += "Cuotas con retraso " + userRepository.findUnpaidInstallmentsByRut(user.getRut()).size() + "\n";
+        summary += "Monto total pagado " + getAmountPaid(user) + "\n";
+        summary += "Saldo por pagar " + getAmountPendingPayment(user) + "\n";
+        return summary;
 
     }
 

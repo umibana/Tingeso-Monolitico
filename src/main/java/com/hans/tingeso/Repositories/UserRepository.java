@@ -12,9 +12,16 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
-     UserEntity findByRut(String rut);
+    UserEntity findByRut(String rut);
 
-     @Query("SELECT u.installments FROM UserEntity u WHERE u.rut = :userRut")
-     List<InstallmentEntity> findInstallmentsByRut(@Param("userRut") String rut);
+    @Query("SELECT u.installments FROM UserEntity u WHERE u.rut = :userRut")
+    List<InstallmentEntity> findInstallmentsByRut(@Param("userRut") String rut);
+    @Query("SELECT i FROM InstallmentEntity i WHERE i.isPaid = true AND i.user.rut = :userRut")
+    List<InstallmentEntity> findPaidInstallmentsByRut(@Param("userRut") String rut);
+    @Query("SELECT i FROM InstallmentEntity i WHERE i.isPaid = false AND i.user.rut = :userRut")
+    List<InstallmentEntity> findUnpaidInstallmentsByRut(@Param("userRut") String rut);
+    @Query("SELECT MAX(i.paidDate) FROM InstallmentEntity i WHERE i.isPaid = true AND i.user.rut = :userRut")
+    InstallmentEntity findLastPaidDateByRut(@Param("userRut") String rut);
+
 
 }

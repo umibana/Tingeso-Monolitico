@@ -12,8 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
     @Autowired
     UserService userService;
+
     @PostMapping("/upload")
-    public String handleFileUpload(@ModelAttribute UploadModel fileUploaded){
+    public String handleFileUpload(@ModelAttribute UploadModel fileUploaded) {
         MultipartFile file = fileUploaded.getFile();
         System.out.println(file.getOriginalFilename());
         userService.addGrades(file);
