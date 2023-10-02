@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("users")
     public String users(Model model) {
-        ArrayList<UserEntity> users = userService.getUsers();
+        List<UserEntity> users = userService.getUsers();
         List<InstallmentEntity> installments = userService.findInstallments("12345678-9");
         model.addAttribute("users", users);
         return "index";

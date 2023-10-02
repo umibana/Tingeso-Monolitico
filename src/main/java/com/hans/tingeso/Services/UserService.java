@@ -29,8 +29,8 @@ public class UserService {
     @Autowired
     ScoreRepository scoreRepository;
 
-    public ArrayList<UserEntity> getUsers() {
-        return (ArrayList<UserEntity>) userRepository.findAll();
+    public List<UserEntity> getUsers() {
+        return (List<UserEntity>) userRepository.findAll();
     }
 
     public void createUser(@ModelAttribute UserEntity user) {
@@ -101,6 +101,9 @@ public class UserService {
         for (ScoreEntity score : scores) {
             System.out.println(score);
             total += score.getScore();
+        }
+        if (scores.size() == 0 ){
+            return 0;
         }
         return total / scores.size();
     }
