@@ -30,7 +30,7 @@ public class UserService {
     ScoreRepository scoreRepository;
 
     public List<UserEntity> getUsers() {
-        return (List<UserEntity>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
     public void createUser(@ModelAttribute UserEntity user) {

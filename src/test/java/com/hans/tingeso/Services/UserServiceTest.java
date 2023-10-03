@@ -14,19 +14,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,8 +43,6 @@ public class UserServiceTest {
         UserEntity user2 = new UserEntity();
         List<UserEntity> expectedUsers = Arrays.asList(user1, user2);
         when(userRepository.findAll()).thenReturn(expectedUsers);
-
-
         List<UserEntity> actualUsers = userService.getUsers();
 
         assertEquals(expectedUsers, actualUsers);
