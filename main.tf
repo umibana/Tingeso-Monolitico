@@ -15,7 +15,7 @@ provider "aws" {
 
 resource "aws_instance" "app-simple-aws" {
   ami           = "ami-0af6e9042ea5a4e3e" # Imagen de la maquina virtual / depende de la región
-  instance_type = "t2.micro" # Capacidad de la maquina virtual
+  instance_type = "t2.small" # Capacidad de la maquina virtual
   key_name      = aws_key_pair.kp.key_name # Indicar key pair de la instancia de EC2 a crear
 
   tags = {
