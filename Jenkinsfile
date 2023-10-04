@@ -19,21 +19,20 @@ pipeline {
                         -Dsonar.token=sqp_973532bb05d5d19caf378c79d739abb9b86b572a"""
             }
         }
-        stage('Build Docker image'){
-        steps {
-            echo 'Building Docker image....'
-            sh 'docker buildx build --platform linux/amd64 -t umibana/monolithicwebapp .'
-            }
-        }
-        stage('Push Docker image'){
+      stage('Log in Docker'){
          steps{
-             echo 'Pushing Docker image...'
+             echo 'Logging in Docker...'
              withCredentials([string(credentialsId: 'dckrhubpassword', variable: 'dckpass')]) {
                  sh "docker login -u umibana -p ${dckpass}"
              }
-             sh "docker push umibana/monolithicwebapp"
-
          }
+        stage('Build and push Docker image'){
+        steps {
+            echo 'Building Docker image....'
+            sh 'docker buildx build --platform linux/amd64 --push -t umibana/monolithicwebapp .'
+            }
+        }
+
         }
     }
         post {

@@ -42,3 +42,5 @@ key.pem
 
 ### VS Code ###
 .vscode/
+data/db/*
+data/db
