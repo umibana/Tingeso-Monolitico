@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -13,13 +12,11 @@ pipeline {
         stage('SonarQube analysis'){
             steps{
                 echo 'SonarQube analysis....'
-                withSonarQubeEnv('SonarQube') {
-                sh './gradlew sonar \
+                sh """./gradlew sonar \
                         -Dsonar.projectKey=MonolithicWebapp \
                         -Dsonar.projectName='MonolithicWebapp' \
                         -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.token=sqp_973532bb05d5d19caf378c79d739abb9b86b572a'
-                }
+                        -Dsonar.token=sqp_973532bb05d5d19caf378c79d739abb9b86b572a"""
             }
         }
         stage('Build Docker image'){
@@ -38,9 +35,11 @@ pipeline {
 
          }
         }
+    }
         post {
             always {
                 echo 'Build finished'
+                sh "docker logout"
             }
             success {
                 echo 'Build success'
@@ -54,8 +53,6 @@ pipeline {
             changed {
                 echo 'Build changed'
             }
-            sh "docker logout"
       
         }
     }
-}

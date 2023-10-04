@@ -1,9 +1,9 @@
 # First we build the app using Gradle
-
-FROM openjdk:17-alpine as build
-WORKDIR /app
-COPY . .
-RUN ./gradlew build
+# Disabled since we do this in the pipeline
+# FROM openjdk:17-alpine as build
+# WORKDIR /app
+# COPY . .
+# RUN ./gradlew build
 
 # Then we run the app
 
