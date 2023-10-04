@@ -5,7 +5,10 @@ pipeline {
         steps {
                 echo 'Building....'
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/umibana/Tingeso-Monolitico']])
-                script {gradle 'build'}
+                withGradle{
+                    sh './gradlew build'
+
+                }
             }
         }
         stage('SonarQube analysis'){
@@ -50,6 +53,6 @@ pipeline {
             changed {
                 echo 'Build changed'
             }
-      
+
         }
     }
