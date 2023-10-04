@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages{
     stage('Build') {
         steps {
@@ -26,13 +25,12 @@ pipeline {
                  sh "docker login -u umibana -p ${dckpass}"
              }
          }
+      }
         stage('Build and push Docker image'){
         steps {
             echo 'Building Docker image....'
             sh 'docker buildx build --platform linux/amd64 --push -t umibana/monolithicwebapp .'
             }
-        }
-
         }
     }
         post {
