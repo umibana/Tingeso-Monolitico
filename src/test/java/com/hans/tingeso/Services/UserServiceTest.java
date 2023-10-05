@@ -5,7 +5,6 @@ import com.hans.tingeso.Entities.ScoreEntity;
 import com.hans.tingeso.Entities.UserEntity;
 import com.hans.tingeso.Repositories.ScoreRepository;
 import com.hans.tingeso.Repositories.UserRepository;
-import org.apache.catalina.User;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -52,11 +51,16 @@ public class UserServiceTest {
     @Test
     public void createUserTest() {
         UserEntity user = new UserEntity();
+        when(paymentService.getUserDiscounts(user)).thenReturn(10);
+        when(paymentService.getAvailableInstallments(user)).thenReturn(3);
         when(userRepository.save(any(UserEntity.class))).thenReturn(user);
 
         userService.createUser(user);
 
+        verify(paymentService, times(1)).getUserDiscounts(user);
+        verify(paymentService, times(1)).getAvailableInstallments(user);
         verify(userRepository, times(1)).save(user);
+        assertEquals(3, user.getInstallments().size());
     }
 
     @Test
@@ -73,6 +77,13 @@ public class UserServiceTest {
     }
     @Test
     public void addGradesTest() throws IOException {
+        UserEntity user = new UserEntity();
+        user.setRut("20.960.400-0");
+        when(userRepository.findByRut(anyString())).thenReturn(user);
+
+        ScoreEntity scoreEntity = new ScoreEntity();
+        when(scoreRepository.findByUserAndDate(any(UserEntity.class), any(LocalDate.class))).thenReturn(null);
+        when(scoreRepository.save(any(ScoreEntity.class))).thenReturn(scoreEntity);
 
         // We create a test file ".xlsx"
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -85,15 +96,14 @@ public class UserServiceTest {
         workbook.write(outputStream);
         byte[] data = outputStream.toByteArray();
         MultipartFile file = new MockMultipartFile("data.xlsx", data);
+
+        // Act
         userService.addGrades(file);
-        String rut = "20.960.400-0";
-        LocalDate date = LocalDate.parse("12-12-2021", DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        UserEntity user = userRepository.findByRut(rut);
-        if (user != null) {
-            ScoreEntity scoreEntity = scoreRepository.findByUserAndDate(user, date);
-            assertNotNull(scoreEntity);
-            assertEquals(750, scoreEntity.getScore());
-        }
+
+        // Assert
+        verify(userRepository, times(1)).findByRut("20.960.400-0");
+        verify(scoreRepository, times(1)).findByUserAndDate(user, LocalDate.parse("12-12-2021", DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        verify(scoreRepository, times(1)).save(any(ScoreEntity.class));
 
     }
 
