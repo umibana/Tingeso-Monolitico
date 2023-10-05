@@ -137,7 +137,6 @@ public class UserService {
             totalAmount += installment.getAmount() * (1 - (finalDiscount / 100.0));
             index++;
         }
-
         return totalAmount;
 
     }

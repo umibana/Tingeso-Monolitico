@@ -7,27 +7,27 @@
 
 </head>
 <body>
-<h1 class="text-3xl font-bold underline"> Hello world</h1>
-
-<!-- We list the users (students) -->
-<div th:each="user:${users}">
-    <p th:text="${user.name}"></p>
-</div>
+<div class="flex flex-col min-h-screen items-center justify-center bg-slate-900 text-white space-y-4">
+<h1 class="text-3xl font-bold underline ">Top Education</h1>
+<!--<div th:each="user:${users}">-->
+<!--    <p th:text="${user.name}"></p>-->
+<!--</div>-->
 <div>
     <!-- We create a link to the createUsers route -->
     <a th:href="@{/createUser}"> Crear usuario</a>
 </div>
-<h1>Busqueda por RUT</h1>
+<h1 class="text-2xl font-bold">Busqueda por RUT</h1>
 <form action="/installments" method="get">
     <input type="text" name="search" placeholder="Ingrese RUT">
     <input type="submit" value="Search">
 </form>
 
-<h1>Subir notas</h1>
+<h1 class="text-2xl font-bold">Subir notas</h1>
 <form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data">
     <input type="file" name="file"/>
     <button type="submit">Upload</button>
 </form>
-
+    <h1 class="text-2xl font-bold">Listar usuarios</h1>
+</div>
 </body>
 </html>

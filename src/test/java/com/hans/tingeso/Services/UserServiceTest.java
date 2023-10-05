@@ -148,16 +148,17 @@ public class UserServiceTest {
         // Arrange
         UserEntity user = new UserEntity();
         InstallmentEntity installment1 = new InstallmentEntity();
-        installment1.setAmount(100);
+        installment1.setAmountPaid(100);
         InstallmentEntity installment2 = new InstallmentEntity();
-        installment2.setAmount(200);
+        installment2.setAmountPaid(200);
         List<InstallmentEntity> installments = Arrays.asList(installment1, installment2);
-        when(userRepository.findUnpaidInstallmentsByRut(user.getRut())).thenReturn(installments);
+        when(userRepository.findPaidInstallmentsByRut(user.getRut())).thenReturn(installments);
 
         // Act
         int amountPaid = userService.getAmountPaid(user);
 
         // Assert
+
         assertEquals(300, amountPaid);
     }
 
@@ -166,11 +167,11 @@ public class UserServiceTest {
         // Arrange
         UserEntity user = new UserEntity();
         InstallmentEntity installment1 = new InstallmentEntity();
-        installment1.setAmountPaid(100);
+        installment1.setAmount(100);
         InstallmentEntity installment2 = new InstallmentEntity();
-        installment2.setAmountPaid(200);
+        installment2.setAmount(200);
         List<InstallmentEntity> installments = Arrays.asList(installment1, installment2);
-        when(userRepository.findPaidInstallmentsByRut(user.getRut())).thenReturn(installments);
+        when(userRepository.findUnpaidInstallmentsByRut(user.getRut())).thenReturn(installments);
 
         // Act
         int amountPendingPayment = userService.getAmountPendingPayment(user);
