@@ -5,6 +5,7 @@ import com.hans.tingeso.Entities.ScoreEntity;
 import com.hans.tingeso.Entities.UserEntity;
 import com.hans.tingeso.Repositories.ScoreRepository;
 import com.hans.tingeso.Repositories.UserRepository;
+import org.apache.catalina.User;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -101,30 +102,50 @@ public class UserServiceTest {
         // Arrange
         UserEntity user = new UserEntity();
         ScoreEntity score1 = new ScoreEntity();
-        score1.setScore(900);
+        score1.setScore(10);
         ScoreEntity score2 = new ScoreEntity();
-        score2.setScore(850);
+        score2.setScore(20);
         List<ScoreEntity> scores = Arrays.asList(score1, score2);
+
         when(scoreRepository.findByUser(user)).thenReturn(scores);
 
-        // Act
         int averageScore = userService.getAverageScore(user);
 
         // Assert
-        assertEquals(875, averageScore);
+        assertEquals(15, averageScore);
     }
 
     @Test
     public void getDiscountScoreTest() {
         // Arrange
         UserEntity user = new UserEntity();
-        user.setDiscount(0);
+        ScoreEntity score1 = new ScoreEntity();
+        score1.setScore(960);
+        ScoreEntity score2 = new ScoreEntity();
+        score2.setScore(930);
+        ScoreEntity score3 = new ScoreEntity();
+        score3.setScore(880);
+        ScoreEntity score4 = new ScoreEntity();
+        score4.setScore(840);
+        List<ScoreEntity> scores1 = Arrays.asList(score1);
+        List<ScoreEntity> scores2 = Arrays.asList(score2);
+        List<ScoreEntity> scores3 = Arrays.asList(score3);
+        List<ScoreEntity> scores4 = Arrays.asList(score4);
+
+        when(scoreRepository.findByUser(user)).thenReturn(scores1).thenReturn(scores2).thenReturn(scores3).thenReturn(scores4);
 
         // Act
-        int discountScore = userService.getDiscountScore(user);
+        int discountScore1 = userService.getDiscountScore(user);
+        int discountScore2 = userService.getDiscountScore(user);
+        int discountScore3 = userService.getDiscountScore(user);
+        int discountScore4 = userService.getDiscountScore(user);
 
         // Assert
-        assertEquals(0, discountScore);
+        assertEquals(10, discountScore1);
+        assertEquals(5, discountScore2);
+        assertEquals(2, discountScore3);
+        assertEquals(0, discountScore4);
+
     }
 
     @Test
@@ -181,7 +202,7 @@ public class UserServiceTest {
     }
     @Test
     public void getUserSummaryTest() {
-        // Arrange
+
         UserEntity user = new UserEntity();
         user.setName("John");
         user.setSurname("Doe");
@@ -190,10 +211,8 @@ public class UserServiceTest {
         user.setUsingCredit(false);
         user.setDiscount(10);
 
-        // Act
         String userSummary = userService.getUserSummary(user);
 
-        // Assert
         assertTrue(userSummary.contains("Nombre: John Doe"));
         assertTrue(userSummary.contains("RUT: 12345678-9"));
         assertTrue(userSummary.contains("Tipo de pago Contado"));
@@ -202,6 +221,10 @@ public class UserServiceTest {
         assertTrue(userSummary.contains("Cuotas con retraso 0"));
         assertTrue(userSummary.contains("Monto total pagado 0"));
         assertTrue(userSummary.contains("Saldo por pagar 0"));
+
+        user.setUsingCredit(true);
+        String userSummary1 = userService.getUserSummary(user);
+        assertTrue(userSummary1.contains("Tipo de pago Crédito"));
     }
 
 

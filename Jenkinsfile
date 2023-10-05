@@ -14,11 +14,11 @@ pipeline {
         stage('SonarQube analysis'){
             steps{
                 echo 'SonarQube analysis....'
-                sh """./gradlew sonar \
-                        -Dsonar.projectKey=MonolithicWebapp \
-                        -Dsonar.projectName='MonolithicWebapp' \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.token=sqp_973532bb05d5d19caf378c79d739abb9b86b572a"""
+                sh """ ./gradlew jacocoTestReport sonar \
+                              -Dsonar.projectKey=MonolithicWebapp \
+                              -Dsonar.projectName='MonolithicWebapp' \
+                              -Dsonar.host.url=http://localhost:9000 \
+                              -Dsonar.token=sqp_abaf5c1f08cc78cdc9721d607a532ade280f00ba"""
             }
         }
       stage('Log in Docker'){

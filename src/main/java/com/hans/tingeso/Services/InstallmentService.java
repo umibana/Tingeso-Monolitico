@@ -1,13 +1,9 @@
 package com.hans.tingeso.Services;
 
 import com.hans.tingeso.Entities.InstallmentEntity;
-import com.hans.tingeso.Entities.UserEntity;
 import com.hans.tingeso.Repositories.InstallmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-
 
 @Service
 public class InstallmentService {

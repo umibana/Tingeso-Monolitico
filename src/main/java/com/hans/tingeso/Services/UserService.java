@@ -96,7 +96,6 @@ public class UserService {
 
     public int getAverageScore(UserEntity user) {
         List<ScoreEntity> scores = scoreRepository.findByUser(user);
-        System.out.println(scores);
         int total = 0;
         for (ScoreEntity score : scores) {
             System.out.println(score);
