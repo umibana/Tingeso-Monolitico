@@ -17,10 +17,10 @@ public class InstallmentEntity {
     private Integer id;
     private boolean isPaid;
     private int amount;
-    private int amountPaid;
+    private double amountPaid;
     private LocalDate date;
     private LocalDate paidDate;
     @ManyToOne
-    @JoinColumn(name = "user_id") // add this line
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 }

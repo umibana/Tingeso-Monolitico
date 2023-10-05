@@ -9,7 +9,6 @@
 <body>
 <h1 class="text-3xl font-bold underline"> Crear usuario </h1>
 
-<!-- Form for the creation of an userEntity -->
 <form method="post" th:action="@{/users}">
     <input type="text" id="name" name="name" placeholder="Nombre">
     <input type="text" id="surname" name="surname" placeholder="Apellidos">
@@ -21,6 +20,10 @@
         <option value="PRIVADO">Privado</option>
     </select>
     <input type="number" id="graduationYear" name="graduationYear" placeholder="Año de graduación">
+    <p>Matricula pagada?</p>
+    <input type="checkbox" id="enrollStatus" name="enrollStatus" placeholder="Estado de matrícula">
+    <p>Paga con credito?</p>
+    <input type="checkbox" id="usingCredit" name="usingCredit" placeholder="Paga con crédito?">
     <button type="submit">Create User</button>
 </form>
 

@@ -25,7 +25,6 @@ public class UserController {
     @GetMapping("users")
     public String users(Model model) {
         List<UserEntity> users = userService.getUsers();
-        List<InstallmentEntity> installments = userService.findInstallments("12345678-9");
         model.addAttribute("users", users);
         return "index";
     }
@@ -33,7 +32,6 @@ public class UserController {
     @PostMapping("users")
     public String createUser(@ModelAttribute UserEntity user) {
         userService.createUser(user);
-        System.out.println(user);
         return "index";
     }
 
@@ -45,8 +43,10 @@ public class UserController {
     @GetMapping("installments")
     public String installments(@RequestParam String search, Model model) {
         List<InstallmentEntity> installments = userService.findInstallments(search);
+        UserEntity user = installments.get(1).getUser();
         model.addAttribute("installments", installments);
-        model.addAttribute("user", installments.get(1).getUser());
+        model.addAttribute("user", user);
+        model.addAttribute("discountScore", userService.getDiscountScore(user));
         return "installments";
     }
 
@@ -55,6 +55,10 @@ public class UserController {
         InstallmentEntity installment = installmentService.findById(id);
         installment.setPaid(!installment.isPaid());
         installment.setPaidDate(LocalDate.now());
+        int amount = installment.getAmount();
+        int discount = installment.getUser().getDiscount();
+        int scoreDiscount = userService.getDiscountScore(installment.getUser());
+        installment.setAmountPaid(amount * ((100.0 - discount - scoreDiscount)/100));
         installmentService.saveInstallment(installment);
         return "redirect:/installments?search=" + installment.getUser().getRut();
     }

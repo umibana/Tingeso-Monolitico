@@ -8,7 +8,7 @@
 </head>
 <body>
 <div th:each="installment : ${installments  }">
-    <p th:text="${installment.getAmount() * (installmentStat.index == 0 ? 1 - ((user.getDiscount() + averageScoreDiscount) / 100.0) : 1 - (user.getDiscount() / 100.0))}"></p>
+    <p th:text="${installment.getAmount() * ((100.0 - user.getDiscount() - discountScore)/100)}"></p>
     <p th:text="${installment.getDate()}"></p>
     <p th:text="${installment.isPaid()}"></p>
     <form th:action="@{/togglePaidStatus}" th:method="post">

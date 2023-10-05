@@ -125,7 +125,7 @@ public class UserService {
         return scores.size();
 
     }
-    public int getAmountPaid(UserEntity user){
+    public int getAmountPendingPayment(UserEntity user){
         List<InstallmentEntity> installments = userRepository.findUnpaidInstallmentsByRut(user.getRut());
         int discount = user.getDiscount();
         int scoreDiscount = getDiscountScore(user);
@@ -141,7 +141,7 @@ public class UserService {
         return totalAmount;
 
     }
-    public int getAmountPendingPayment(UserEntity user){
+    public int getAmountPaid(UserEntity user){
         List<InstallmentEntity> installments = userRepository.findPaidInstallmentsByRut(user.getRut());
         int totalAmount = 0;
         for (InstallmentEntity installment : installments) {
