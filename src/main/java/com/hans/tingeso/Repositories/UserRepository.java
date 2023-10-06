@@ -23,5 +23,7 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     List<InstallmentEntity> findUnpaidInstallmentsByRut(@Param("userRut") String rut);
     @Query("SELECT MAX(i.paidDate) FROM InstallmentEntity i WHERE i.isPaid = true AND i.user.rut = :userRut")
     LocalDate findLastPaidDateByRut(@Param("userRut") String rut);
+    @Query("SELECT i FROM InstallmentEntity i WHERE i.isPaid = false AND i.user.rut = :userRut AND i.date < CURRENT_DATE")
+    List<InstallmentEntity> findTaxedInstallments(@Param("userRut") String rut);
 
 }

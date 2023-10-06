@@ -158,14 +158,14 @@ public class UserService {
         summary += "Nombre: " + user.getName() + " " + user.getSurname() + "\n";
         summary += "Examenes rendidos: " + getExamsTaken(user) + "\n";
         summary += "Promedio: " + getAverageScore(user) + "\n";
+        summary += "Monto total arancel a pagar" + (getAmountPaid(user) + getAmountPendingPayment(user)) + "\n";
         summary += "Tipo de pago: " + (user.isUsingCredit() ? "Crédito" : "Contado") + "\n";
         summary += "Cuotas pactadas: " + user.getInstallments().size() + "\n";
         summary += "Cuotas pagadas: " + userRepository.findPaidInstallmentsByRut(user.getRut()).size() + "\n";
         summary += "Monto total pagado: " + getAmountPaid(user) + "\n";
         summary += "Fecha ultimo pago: " + (lastPayment != null ? lastPayment.format(formatter) : "No pagada") + "\n";
-//▪ Nro. Cuotas con retraso : Use the payment service and find where localdate > this.localdate
         summary += "Saldo por pagar: " + getAmountPendingPayment(user) + "\n";
-        summary += "Cuotas con retraso: " + userRepository.findUnpaidInstallmentsByRut(user.getRut()).size() + "\n";
+        summary += "Nro. Cuotas con retraso" + userRepository.findTaxedInstallments(user.getRut()).size() + "\n";
         return summary;
 
 

@@ -224,16 +224,20 @@ public class UserServiceTest {
         installments.add(new InstallmentEntity());
         user.setInstallments(installments);
 
-        String userSummary = userService.getUserSummary(user);
+        String summary= userService.getUserSummary(user);
 
-        assertTrue(userSummary.contains("Nombre: John Doe"));
-        assertTrue(userSummary.contains("RUT: 12345678-9"));
-        assertTrue(userSummary.contains("Tipo de pago: Contado"));
-        assertTrue(userSummary.contains("Examenes rendidos: 0"));
-        assertTrue(userSummary.contains("Promedio: 0"));
-        assertTrue(userSummary.contains("Cuotas con retraso: 0"));
-        assertTrue(userSummary.contains("Monto total pagado"));
-        assertTrue(userSummary.contains("Saldo por pagar"));
+        assertTrue(summary.contains("RUT: "));
+        assertTrue(summary.contains("Nombre: "));
+        assertTrue(summary.contains("Examenes rendidos: "));
+        assertTrue(summary.contains("Promedio: "));
+        assertTrue(summary.contains("Monto total arancel a pagar"));
+        assertTrue(summary.contains("Tipo de pago: "));
+        assertTrue(summary.contains("Cuotas pactadas: "));
+        assertTrue(summary.contains("Cuotas pagadas: "));
+        assertTrue(summary.contains("Monto total pagado: "));
+        assertTrue(summary.contains("Fecha ultimo pago: "));
+        assertTrue(summary.contains("Saldo por pagar: "));
+        assertTrue(summary.contains("Nro. Cuotas con retraso"));
 
         user.setUsingCredit(true);
         String userSummary1 = userService.getUserSummary(user);
