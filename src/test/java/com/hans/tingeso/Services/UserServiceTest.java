@@ -20,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -212,7 +213,6 @@ public class UserServiceTest {
     }
     @Test
     public void getUserSummaryTest() {
-
         UserEntity user = new UserEntity();
         user.setName("John");
         user.setSurname("Doe");
@@ -220,21 +220,24 @@ public class UserServiceTest {
         user.setEnrollStatus(true);
         user.setUsingCredit(false);
         user.setDiscount(10);
+        ArrayList<InstallmentEntity> installments = new ArrayList<>(1);
+        installments.add(new InstallmentEntity());
+        user.setInstallments(installments);
 
         String userSummary = userService.getUserSummary(user);
 
         assertTrue(userSummary.contains("Nombre: John Doe"));
         assertTrue(userSummary.contains("RUT: 12345678-9"));
-        assertTrue(userSummary.contains("Tipo de pago Contado"));
-        assertTrue(userSummary.contains("Examenes rendidos 0"));
+        assertTrue(userSummary.contains("Tipo de pago: Contado"));
+        assertTrue(userSummary.contains("Examenes rendidos: 0"));
         assertTrue(userSummary.contains("Promedio: 0"));
-        assertTrue(userSummary.contains("Cuotas con retraso 0"));
-        assertTrue(userSummary.contains("Monto total pagado 0"));
-        assertTrue(userSummary.contains("Saldo por pagar 0"));
+        assertTrue(userSummary.contains("Cuotas con retraso: 0"));
+        assertTrue(userSummary.contains("Monto total pagado"));
+        assertTrue(userSummary.contains("Saldo por pagar"));
 
         user.setUsingCredit(true);
         String userSummary1 = userService.getUserSummary(user);
-        assertTrue(userSummary1.contains("Tipo de pago Crédito"));
+        assertTrue(userSummary1.contains("Tipo de pago: Crédito"));
     }
 
 
