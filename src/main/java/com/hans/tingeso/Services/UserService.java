@@ -147,20 +147,27 @@ public class UserService {
         }
         return totalAmount;
     }
-    public String getUserSummary(UserEntity user){
+    public String getUserSummary(UserEntity user) {
+        LocalDate lastPayment = userRepository.findLastPaidDateByRut(user.getRut());
+        DateTimeFormatter formatter = null;
+        if (lastPayment != null) {
+            formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        }
         String summary = "";
-        summary += "Nombre: " + user.getName() + " " + user.getSurname() + "\n";
         summary += "RUT: " + user.getRut() + "\n";
-        summary += "Examenes rendidos " + getExamsTaken(user) + "\n";
+        summary += "Nombre: " + user.getName() + " " + user.getSurname() + "\n";
+        summary += "Examenes rendidos: " + getExamsTaken(user) + "\n";
         summary += "Promedio: " + getAverageScore(user) + "\n";
-        summary += "Tipo de pago " + (user.isUsingCredit() ? "Crédito" : "Contado") + "\n";
-        summary += "Cuotas pagadas " + getAmountPendingPayment(user) + "\n";
-        summary += "Fecha ultimo pago " + userRepository.findLastPaidDateByRut(user.getRut()) + "\n";
+        summary += "Tipo de pago: " + (user.isUsingCredit() ? "Crédito" : "Contado") + "\n";
+        summary += "Cuotas pactadas: " + user.getInstallments().size() + "\n";
+        summary += "Cuotas pagadas: " + userRepository.findPaidInstallmentsByRut(user.getRut()).size() + "\n";
+        summary += "Monto total pagado: " + getAmountPaid(user) + "\n";
+        summary += "Fecha ultimo pago: " + (lastPayment != null ? lastPayment.format(formatter) : "No pagada") + "\n";
 //▪ Nro. Cuotas con retraso : Use the payment service and find where localdate > this.localdate
-        summary += "Cuotas con retraso " + userRepository.findUnpaidInstallmentsByRut(user.getRut()).size() + "\n";
-        summary += "Monto total pagado " + getAmountPaid(user) + "\n";
-        summary += "Saldo por pagar " + getAmountPendingPayment(user) + "\n";
+        summary += "Saldo por pagar: " + getAmountPendingPayment(user) + "\n";
+        summary += "Cuotas con retraso: " + userRepository.findUnpaidInstallmentsByRut(user.getRut()).size() + "\n";
         return summary;
+
 
     }
 

@@ -26,7 +26,7 @@ public class UserController {
     public String users(Model model) {
         List<UserEntity> users = userService.getUsers();
         model.addAttribute("users", users);
-        return "index";
+        return "users";
     }
 
     @PostMapping("users")
@@ -44,6 +44,8 @@ public class UserController {
     public String installments(@RequestParam String search, Model model) {
         List<InstallmentEntity> installments = userService.findInstallments(search);
         UserEntity user = installments.get(1).getUser();
+        String summary = userService.getUserSummary(user);
+        model.addAttribute("summary", summary);
         model.addAttribute("installments", installments);
         model.addAttribute("user", user);
         model.addAttribute("discountScore", userService.getDiscountScore(user));
