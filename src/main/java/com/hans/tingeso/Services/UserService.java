@@ -126,15 +126,10 @@ public class UserService {
     }
     public int getAmountPendingPayment(UserEntity user){
         List<InstallmentEntity> installments = userRepository.findUnpaidInstallmentsByRut(user.getRut());
-        int discount = user.getDiscount();
-        int scoreDiscount = getDiscountScore(user);
+        int discountScore= getDiscountScore(user);
         int totalAmount = 0;
-        int index= 0;
         for (InstallmentEntity installment : installments) {
-            // If it's the first installment, we add the discount from the exams
-            int finalDiscount = (index == 0) ? discount + scoreDiscount : scoreDiscount;
-            totalAmount += installment.getAmount() * (1 - (finalDiscount / 100.0));
-            index++;
+            totalAmount += installment.getAmount() *  ((100.0 - user.getDiscount() - discountScore)/100);
         }
         return totalAmount;
 
