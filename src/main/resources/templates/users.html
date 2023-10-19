@@ -18,7 +18,7 @@
       <p th:text="${user.getRut()}"></p>
       <p th:text="${user.getBirthdate()}"></p>
       <p>Cuotas: </p>
-      <p th:text="${user.getInstallments().size()}"></p>
+      <p th:text="${  user.isUsingCredit() == true ? user.getInstallments().size() : 1}"></p>
       <p>Matriculado?: </p>
       <p th:text="${user.isEnrollStatus() == true ? 'Si' : 'No'}"></p>
       <p>Credito?: </p>
