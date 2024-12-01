@@ -14,11 +14,10 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 echo 'SonarQube analysis....'
-                sh """ ./gradlew jacocoTestReport sonar \
-                          -Dsonar.projectKey=MonolithicWebapp \
-                          -Dsonar.projectName='MonolithicWebapp' \
-                          -Dsonar.host.url=http://localhost:9000 \
-                          -Dsonar.token=sqp_abaf5c1f08cc78cdc9721d607a532ade280f00ba"""
+                sh """ ./gradlew sonar \
+                          -Dsonar.projectKey=Devsecops \
+                          -Dsonar.host.url=http://localhost:9001 \
+                          -Dsonar.token=sqp_295d33e50702c684444b9841381219259151a52c"""
             }
         }
 
@@ -45,7 +44,7 @@ pipeline {
                     // Make sure your application is running before scanning
                     sh '''
                         docker run -v $(pwd)/zap-report:/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py \
-                        -t http://your-application-url \
+                        -t http://localhost:8090 \
                         -r zap-report.html \
                         -I \
                         -j \
