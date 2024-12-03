@@ -52,7 +52,22 @@ public class UserController {
         return "installments";
     }
 
-
+    @PostMapping("togglePaidStatus")
+    public String togglePaidStatus(@RequestParam Integer id) {
+        InstallmentEntity installment = installmentService.findById(id);
+        System.out.println(installment.isPaid());
+        installment.setPaid(!installment.isPaid());
+        installment.setPaidDate(LocalDate.now());
+        int amount = installment.getAmount();
+        int discount = installment.getUser().getDiscount();
+        int scoreDiscount = userService.getDiscountScore(installment.getUser());
+        System.out.println(amount);
+        System.out.println(discount);
+        System.out.println(scoreDiscount);
+        installment.setAmountPaid(amount * ((100.0 - discount - scoreDiscount)/100));
+        installmentService.saveInstallment(installment);
+        return "redirect:/installments?search=" + installment.getUser().getRut();
+    }
 
 
 }
