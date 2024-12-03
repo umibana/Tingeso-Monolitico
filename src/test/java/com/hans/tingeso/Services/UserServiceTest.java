@@ -39,7 +39,7 @@ public class UserServiceTest {
     private ScoreRepository scoreRepository;
 
     @Test
-    public void getUsersTest() {
+    void getUsersTest() {
         UserEntity user1 = new UserEntity();
         UserEntity user2 = new UserEntity();
         List<UserEntity> expectedUsers = Arrays.asList(user1, user2);
@@ -50,7 +50,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUserTest() {
+    void createUserTest() {
         UserEntity user = new UserEntity();
         when(paymentService.getUserDiscounts(user)).thenReturn(10);
         when(paymentService.getAvailableInstallments(user)).thenReturn(3);
@@ -65,7 +65,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findInstallmentsTest() {
+    void findInstallmentsTest() {
         String rut = "testRut";
         InstallmentEntity installment1 = new InstallmentEntity();
         InstallmentEntity installment2 = new InstallmentEntity();
@@ -77,7 +77,7 @@ public class UserServiceTest {
         assertEquals(expectedInstallments, actualInstallments);
     }
     @Test
-    public void addGradesTest() throws IOException {
+    void addGradesTest() throws IOException {
         UserEntity user = new UserEntity();
         user.setRut("20.960.400-0");
         when(userRepository.findByRut(anyString())).thenReturn(user);
@@ -109,7 +109,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getAverageScoreTest() {
+    void getAverageScoreTest() {
         // Arrange
         UserEntity user = new UserEntity();
         ScoreEntity score1 = new ScoreEntity();
@@ -127,7 +127,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getDiscountScoreTest() {
+    void getDiscountScoreTest() {
         // Arrange
         UserEntity user = new UserEntity();
         ScoreEntity score1 = new ScoreEntity();
@@ -160,7 +160,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getExamsTakenTest() {
+    void getExamsTakenTest() {
         // Arrange
         UserEntity user = new UserEntity();
         ScoreEntity score1 = new ScoreEntity();
@@ -176,7 +176,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getAmountPaidTest() {
+    void getAmountPaidTest() {
         // Arrange
         UserEntity user = new UserEntity();
         InstallmentEntity installment1 = new InstallmentEntity();
@@ -195,7 +195,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getAmountPendingPaymentTest() {
+    void getAmountPendingPaymentTest() {
         // Arrange
         UserEntity user = new UserEntity();
         InstallmentEntity installment1 = new InstallmentEntity();
@@ -212,7 +212,7 @@ public class UserServiceTest {
         assertEquals(300, amountPendingPayment);
     }
     @Test
-    public void getUserSummaryTest() {
+    void getUserSummaryTest() {
         UserEntity user = new UserEntity();
         user.setName("John");
         user.setSurname("Doe");

@@ -22,7 +22,7 @@ public class InstallmentServiceTest {
     private InstallmentService installmentService;
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         // Arrange
         InstallmentEntity installment = new InstallmentEntity();
         installment.setId(1);
@@ -37,7 +37,7 @@ public class InstallmentServiceTest {
     }
 
     @Test
-    public void testSaveInstallment() {
+    void testSaveInstallment() {
         // Arrange
         InstallmentEntity installment = new InstallmentEntity();
         installment.setId(1);

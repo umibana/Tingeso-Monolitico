@@ -7,6 +7,8 @@ import com.hans.tingeso.Repositories.ScoreRepository;
 import com.hans.tingeso.Repositories.UserRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +30,8 @@ public class UserService {
     PaymentService paymentService;
     @Autowired
     ScoreRepository scoreRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public List<UserEntity> getUsers() {
         return userRepository.findAll();
@@ -98,10 +102,10 @@ public class UserService {
         List<ScoreEntity> scores = scoreRepository.findByUser(user);
         int total = 0;
         for (ScoreEntity score : scores) {
-            System.out.println(score);
+            logger.info("Processing score: {}", score);
             total += score.getScore();
         }
-        if (scores.size() == 0 ){
+        if (scores.isEmpty() ){
             return 0;
         }
         return total / scores.size();

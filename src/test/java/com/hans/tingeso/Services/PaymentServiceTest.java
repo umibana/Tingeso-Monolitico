@@ -1,25 +1,17 @@
 package com.hans.tingeso.Services;
 
-import com.hans.tingeso.Entities.InstallmentEntity;
 import com.hans.tingeso.Entities.UserEntity;
 import com.hans.tingeso.Models.SchoolType;
-import com.hans.tingeso.Repositories.InstallmentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.Mockito.*;
-
 import java.time.Year;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentServiceTest {
     @Test
-    public void testGetUserDiscounts() {
+    void testGetUserDiscounts() {
         // Arrange
         PaymentService paymentService = new PaymentService();
         UserEntity user1 = new UserEntity();
@@ -50,7 +42,7 @@ public class PaymentServiceTest {
     }
 
     @Test
-    public void testGetAvailableInstallments() {
+    void testGetAvailableInstallments() {
         // Arrange
         PaymentService paymentService = new PaymentService();
         UserEntity user = new UserEntity();
